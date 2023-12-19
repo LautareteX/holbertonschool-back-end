@@ -22,7 +22,6 @@ def get_employee_todo_progress(employee_id):
     print(f"Employee {employee_name} is done with tasks"
           f" ({tasks}/{all_employee}):")
 
-
     print(f"To Do Count: {tasks}/{all_employee}")
 
     for todo in todos_data:
