@@ -8,7 +8,7 @@ import sys
 def get_employee_todo_progress(employee_id):
     """Python script that returns information about TODO list progress"""
 
-    base_url = "https://jsonplaceholder.typicode.com/"
+    base_url = "https://jsonplaceholder.typicode.com"
     user = requests.get(f'{base_url}/users/{employee_id}')
     todos = requests.get(f'{base_url}/todos?userId={employee_id}')
 
