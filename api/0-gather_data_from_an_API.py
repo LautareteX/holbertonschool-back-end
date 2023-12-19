@@ -15,6 +15,9 @@ def get_employee_todo_progress(employee_id):
     user_data = user.json()
     todos_data = todos.json()
 
+    print("User Data:", user_data)
+    print("Todos Data:", todos_data)
+
     employee_name = user_data['name']
     all_employee = len(todos_data)
     tasks = sum(1 for todo in todos_data if todo['completed'])
