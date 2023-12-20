@@ -1,40 +1,27 @@
 #!/usr/bin/python3
-"""Python script that returns information about TODO list progress"""
-
+""" returns information about his/her TODO list progress"""
 import requests
-import sys
+from sys import argv
 
 
-def get_employee_todo_progress(employee_id):
-    """Python script that returns information about TODO list progress"""
+if __name__ == "__main__":
+    employee_id = argv[1]
+    complete_tasks = 0
+    total = 0
+    complete_list = []
 
-    base_url = "https://jsonplaceholder.typicode.com"
-    user = requests.get(f'{base_url}/users/{employee_id}')
-    todos = requests.get(f'{base_url}/todos?userId={employee_id}')
+    employee = (requests.get(
+        f"https://jsonplaceholder.typicode.com/users/{employee_id}"))
+    employee_todos = requests.get(
+        f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos")
 
-    user_data = user.json()
-    todos_data = todos.json()
+    for i in employee_todos.json():
+        if i['completed']:
+            complete_tasks += 1
+            complete_list.append(i)
+        total += 1
 
-    print("User Data:", user_data)
-    print("Todos Data:", todos_data)
-
-    employee_name = user_data['name']
-    all_employee = len(todos_data)
-    tasks = sum(1 for todo in todos_data if todo['completed'])
-
-    print(f"Employee {employee_name} is done with tasks"
-          f" ({tasks}/{all_employee}):")
-
-    print(f"To Do Count: {tasks}/{all_employee}")
-
-    for todo in todos_data:
-        if todo['completed']:
-            print(f"\t {todo['title']}")
-
-
-if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <employee_id>")
-    else:
-        employee_id = int(sys.argv[1])
-        get_employee_todo_progress(employee_id)
+    print(f"Employee {employee.json()['name']} "
+          f"is done with tasks({complete_tasks}/{total}):")
+    for task in complete_list:
+        print(f"\t {task['title']}")
