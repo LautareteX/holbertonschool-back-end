@@ -1,27 +1,21 @@
 #!/usr/bin/python3
 """ returns information about his/her TODO list progress"""
-import requests
-from sys import argv
 
 
 if __name__ == "__main__":
-    employee_id = argv[1]
-    complete_tasks = 0
-    total = 0
-    complete_list = []
+    """change imports"""
+    import requests
+    from sys import argv
 
-    employee = (requests.get(
-        f"https://jsonplaceholder.typicode.com/users/{employee_id}"))
-    employee_todos = requests.get(
-        f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos")
+    employee_id = int(argv[1])
+    base_url = f"https://jsonplaceholder.typicode.com/users/{id}"
 
-    for i in employee_todos.json():
-        if i['completed']:
-            complete_tasks += 1
-            complete_list.append(i)
-        total += 1
+    EMPLOYEE_NAME = requests.get(base_url).json()["name"]
+    task_record = requests.get(base_url + "/todos").json()
+    task_completed = [task for task in task_record if task["completed"]]
 
-    print(f"Employee {employee.json()['name']} "
-          f"is done with tasks({complete_tasks}/{total}):")
-    for task in complete_list:
+    print(f"Employee {EMPLOYEE_NAME} is done", end="")
+    print(f" with tasks({len(task_completed)}/{len(task_record)}):")
+
+    for task in task_completed:
         print(f"\t {task['title']}")
